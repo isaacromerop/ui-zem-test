@@ -57,7 +57,7 @@ const Card = ({
   };
 
   return (
-    <div className="w-72 h-72 relative text-white">
+    <div className="w-72 h-72 relative text-white md:w-full md:h-80 lg:h-72 lg:w-full">
       <div className="inset-0 absolute h-full w-full">
         <Image
           src={picture}
@@ -67,10 +67,19 @@ const Card = ({
         />
       </div>
       <div className="relative flex flex-col justify-end h-full w-full">
-        <div className="pl-4 pr-6">
+        {votes.positive >= votes.negative ? (
+          <div className="absolute h-9 w-9 top-1/4 bg-teal flex justify-center items-center">
+            <ThumbUp />
+          </div>
+        ) : (
+          <div className="absolute h-9 w-9 top-1/4 bg-yellow-300 flex justify-center items-center">
+            <ThumbDown />
+          </div>
+        )}
+        <div className="pl-10 pr-6">
           <p className="text-2xl mb-2">{name}</p>
           {seeAllDescription ? (
-            <p className="text-sm">
+            <p className="text-sm pl-2">
               {`${description}`}{" "}
               <span
                 onClick={() => setSeeAllDescription(false)}
@@ -80,7 +89,7 @@ const Card = ({
               </span>{" "}
             </p>
           ) : (
-            <p className="text-sm">
+            <p className="text-sm pl-2">
               {`${description.slice(0, 50)}...`}{" "}
               <span
                 onClick={() => setSeeAllDescription(true)}
