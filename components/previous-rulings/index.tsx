@@ -14,7 +14,7 @@ const PreviousRulings = (): React.ReactElement => {
     <div>
       <div className="flex justify-between px-3.5">
         <p className="text-2xl font-light lg:px-32">Previous Rulings</p>
-        <div className="lg:px-32">
+        <div className="hidden md:inline-block lg:px-32">
           <Listbox value={selectedValue} onChange={setSelectedValue}>
             <Listbox.Button className="relative w-32 border-2 border-black text-left px-5">
               <span className="block truncate">{selectedValue.name}</span>
