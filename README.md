@@ -76,6 +76,7 @@ _Main tools of this project:_
 
 - [React Query](https://react-query.tanstack.com/) - Performant and powerful data synchronization for React
 - [Next.js](https://nextjs.org/) - The React Framework for Production
+- [NestJS](https://nestjs.com/) - Hello, nest!
 - [MongoDB](https://www.mysql.com/) - Build faster. Build smarter.​​
 
 ## Authors ✒️
