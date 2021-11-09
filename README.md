@@ -36,31 +36,31 @@ git clone https://github.com/isaacromerop/back-zem-test.git
 
 _Now you have to configure your local environment._
 
-_Start a terminal inside /zemoga folder and then install all dependencies with:_
+_Start a terminal inside /zemoga folder from ui-zem-test and then install all dependencies with:_
 
 ```
 npm install
 ```
 
-_Then, start a new terminal inside /zemoga-back folder and then install all dependencies with:_
+_Then, start a new terminal inside /zemoga-back folder from back-zem-test and then install all dependencies with:_
 
 ```
 npm install
 ```
 
-_Next inside /zemoga folder create a build using the next line of code using your terminal._
+_Next inside /zemoga folder from ui-zem-test, create a build using the next line of code using your terminal._
 
 ```
 npm run build
 ```
 
-_Now inside /zemoga folder start the server using the next line of code using your terminal._
+_Now inside /zemoga folder from ui-zem-test, start the server using the next line of code using your terminal._
 
 ```
 npm run start
 ```
 
-_After that, open another terminal inside /zemoga-back folder and run the next:_
+_After that, open another terminal inside /zemoga-back folder from back-zem-test and run the next:_
 
 ```
 npm run start
