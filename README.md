@@ -1,4 +1,4 @@
-# Rule of Thu,n.
+# Rule of Thumb.
 
 _Rule of Thumb using react-query, MongoDB, NestJS and Next Js_
 
