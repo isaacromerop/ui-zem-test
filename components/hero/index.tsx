@@ -12,6 +12,7 @@ const Hero = (): React.ReactElement => (
           alt="pope"
           layout="fill"
           className="object-cover filter brightness-75"
+          placeholder="blur"
         />
       </div>
       <div className="relative lg:px-32 lg:bottom-20">

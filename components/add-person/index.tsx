@@ -8,7 +8,13 @@ const AddPerson = (): React.ReactElement => {
       className="relative bg-gray-50 flex gap-x-3 mx-4 mt-4 lg:mx-32 lg:gap-x-0"
     >
       <div className="inset-0 absolute h-full w-full">
-        <Image src={people} alt="" layout="fill" className="object-cover" />
+        <Image
+          src={people}
+          alt=""
+          layout="fill"
+          className="object-cover"
+          placeholder="blur"
+        />
       </div>
       <div className="flex flex-col justify-center items-center bg-white bg-opacity-75 py-4 px-8 h-full w-full relative text-black md:flex-row">
         <p className="text-center text-2xl md:text-xl md:mr-4">
