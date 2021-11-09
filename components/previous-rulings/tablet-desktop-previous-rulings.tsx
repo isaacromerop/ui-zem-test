@@ -1,17 +1,8 @@
+import { PersonAttr } from "../../services/persons";
 import { Card } from "../card";
 
 type TabletDesktopPreviousRulingsProps = {
-  data: Array<{
-    name: string;
-    description: string;
-    category: string;
-    picture: string;
-    lastUpdated: string;
-    votes: {
-      positive: number;
-      negative: number;
-    };
-  }>;
+  data: Array<PersonAttr>;
   view: string;
 };
 
@@ -29,6 +20,7 @@ const TabletDesktopPreviousRulings = ({
     >
       {data.map((each) => (
         <Card
+          _id={each._id}
           key={each.name}
           name={each.name}
           votes={each.votes}
