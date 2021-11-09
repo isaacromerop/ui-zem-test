@@ -2,16 +2,18 @@ import Image from "next/image";
 import { getDistanceDate } from "../../utils/dates";
 import { useState } from "react";
 import { ThumbDown, ThumbUp } from "../../public/assets/icons";
+import { PersonAttr, useVotePerson } from "../../services/persons";
 
 type CardProps = {
-  name: string;
-  description: string;
-  category: string;
-  picture: string;
-  lastUpdated: string;
+  _id: PersonAttr["_id"];
+  name: PersonAttr["name"];
+  description: PersonAttr["description"];
+  category: PersonAttr["category"];
+  picture: PersonAttr["picture"];
+  lastUpdated: PersonAttr["lastUpdated"];
   votes: {
-    positive: number;
-    negative: number;
+    positive: PersonAttr["votes"]["positive"];
+    negative: PersonAttr["votes"]["negative"];
   };
 };
 
@@ -22,10 +24,14 @@ const Card = ({
   picture,
   lastUpdated,
   votes,
+  _id,
 }: CardProps): React.ReactElement => {
   const [seeAllDescription, setSeeAllDescription] = useState<boolean>(false);
   const [thumbUp, setThumbUp] = useState<boolean>(false);
   const [thumbDown, setThumbDown] = useState<boolean>(false);
+  const [successVote, setSuccessVote] = useState<boolean>(false);
+
+  const { mutateAsync } = useVotePerson(_id);
 
   const totalVotes = votes.positive + votes.negative;
   const percentagePositiveVotes = Math.floor(
@@ -54,6 +60,32 @@ const Card = ({
         setThumbUp(false);
       }
     }
+  };
+
+  const handleVote = (): void => {
+    if (successVote) {
+      setSuccessVote(false);
+      return;
+    }
+
+    const newVotes = {
+      ...votes,
+      positive: thumbUp ? votes.positive + 1 : votes.positive,
+      negative: thumbDown ? votes.negative + 1 : votes.negative,
+    };
+
+    mutateAsync({
+      category,
+      description,
+      lastUpdated,
+      name,
+      picture,
+      votes: newVotes,
+    });
+
+    setThumbDown(false);
+    setThumbUp(false);
+    setSuccessVote(true);
   };
 
   return (
@@ -99,38 +131,47 @@ const Card = ({
               </span>{" "}
             </p>
           )}
-          <p className="text-xs text-right font-light mt-2">
-            {getDistanceDate(new Date(lastUpdated), new Date(), true)}
-            <span className="capitalize"> in {category}</span>
-          </p>
+          {successVote ? (
+            <p className="text-xs text-right font-light mt-2">
+              Thank you for your vote!
+            </p>
+          ) : (
+            <p className="text-xs text-right font-light mt-2">
+              {getDistanceDate(new Date(lastUpdated), new Date(), true)}
+              <span className="capitalize"> in {category}</span>
+            </p>
+          )}
           <div className="flex justify-end gap-x-4 mt-4">
             <button
+              disabled={successVote}
               value="up"
               type="button"
               onClick={(e) => handleThumb(e)}
-              className={`h-9 w-9 bg-teal flex justify-center items-center ${
-                thumbUp ? "border-2 border-white" : ""
-              }`}
+              className={`h-9 w-9 bg-teal flex justify-center ${
+                successVote ? "opacity-40" : ""
+              } items-center ${thumbUp ? "border-2 border-white" : ""}`}
             >
               <ThumbUp />
             </button>
             <button
+              disabled={successVote}
               value="down"
               type="button"
               onClick={(e) => handleThumb(e)}
-              className={`h-9 w-9 bg-yellow-300 flex justify-center items-center ${
-                thumbDown ? "border-2 border-white" : ""
-              }`}
+              className={`h-9 w-9 bg-yellow-300 flex justify-center ${
+                successVote ? "opacity-40" : ""
+              } items-center ${thumbDown ? "border-2 border-white" : ""}`}
             >
               <ThumbDown />
             </button>
             <button
-              disabled={thumbUp || thumbDown}
+              disabled={thumbUp || thumbDown || successVote ? false : true}
               className={`h-9 w-24 border border-white bg-black bg-opacity-40 ${
-                thumbUp || thumbDown ? "" : "opacity-40"
+                thumbUp || thumbDown || successVote ? "" : "opacity-40"
               }`}
+              onClick={handleVote}
             >
-              Vote Now
+              {successVote ? "Vote Again" : "Vote Now"}
             </button>
           </div>
         </div>
