@@ -4,11 +4,15 @@ import { TabletDesktopPreviousRulings } from "./tablet-desktop-previous-rulings"
 import { Listbox, Transition } from "@headlessui/react";
 import { FaCaretDown, FaCheck } from "react-icons/fa";
 import { Fragment, useState } from "react";
+import { useGetPersons } from "../../services/persons";
+import { Skeleton } from "../skeleton";
 
 const views = [{ name: "List" }, { name: "Grid" }];
 
 const PreviousRulings = (): React.ReactElement => {
   const [selectedValue, setSelectedValue] = useState(views[0]);
+
+  const { data, isLoading } = useGetPersons();
 
   return (
     <div>
@@ -67,11 +71,16 @@ const PreviousRulings = (): React.ReactElement => {
           </Listbox>
         </div>
       </div>
-      <MobilePreviousRulings data={mockedData.data} />
-      <TabletDesktopPreviousRulings
-        data={mockedData.data}
-        view={selectedValue.name}
-      />
+      {!isLoading && data !== undefined ? (
+        <MobilePreviousRulings data={data} />
+      ) : (
+        <Skeleton />
+      )}
+      {!isLoading && data !== undefined ? (
+        <TabletDesktopPreviousRulings data={data} view={selectedValue.name} />
+      ) : (
+        <Skeleton />
+      )}
     </div>
   );
 };
